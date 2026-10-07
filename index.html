@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>15RS - Səsvermə</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            color: #222;
+        }
+
+        .header {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 15px;
+            color: #ccc;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .info {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .info h2 {
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .participant {
+            background: white;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .participant-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .vote-btn {
+            background: #111;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .vote-btn:hover {
+            background: #333;
+        }
+
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>15RS</h1>
+        <p>Səsvermə</p>
+    </div>
+
+    <div class="container">
+
+        <div class="info">
+            <h2>Bugünkü səsvermə</h2>
+            <p>Səsvermə hər gün saat 21:00-da yenilənir.</p>
+        </div>
+
+        <div class="participant">
+            <span class="participant-name">İştirakçı 1</span>
+            <button class="vote-btn">Səs ver</button>
+        </div>
+
+        <div class="participant">
+            <span class="participant-name">İştirakçı 2</span>
+            <button class="vote-btn">Səs ver</button>
+        </div>
+
+        <div class="participant">
+            <span class="participant-name">İştirakçı 3</span>
+            <button class="vote-btn">Səs ver</button>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        15RS © 2026
+    </div>
+
+</body>
+</html>
