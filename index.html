@@ -105,7 +105,52 @@
     SUPABASE_KEY
   );
 </script>
-<body>
+
+<script>
+async function loadParticipants() {
+    const list = document.getElementById("participants-list");
+    list.textContent = "İştirakçılar yüklənir...";
+
+    const { data, error } = await supabaseClient
+        .from("participants")
+        .select("id, name")
+        .order("id", { ascending: true });
+
+    if (error) {
+        list.textContent = "İştirakçıları yükləmək mümkün olmadı.";
+        console.error(error);
+        return;
+    }
+
+    list.replaceChildren();
+
+    if (!data || data.length === 0) {
+        list.textContent = "Hələ iştirakçı əlavə edilməyib.";
+        return;
+    }
+
+    data.forEach(function(participant) {
+        const item = document.createElement("div");
+        item.className = "participant";
+
+        const name = document.createElement("span");
+        name.className = "participant-name";
+        name.textContent = participant.name;
+
+        const button = document.createElement("button");
+        button.className = "vote-btn";
+        button.textContent = "Səs ver";
+        button.disabled = true;
+        button.title = "Səsvermə növbəti mərhələdə aktivləşdiriləcək";
+
+        item.append(name, button);
+        list.appendChild(item);
+    });
+}
+
+loadParticipants();
+</script>
+    <body>
 
     <div class="header">
         <h1>15RS</h1>
