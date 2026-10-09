@@ -114,16 +114,18 @@ if (!list) return;
     list.textContent = "İştirakçılar yüklənir...";
 
     const { data, error } = await supabaseClient
+        console.log("Supabase sorğusu başladı");
         .from("participants")
         .select("id, name")
         .order("id", { ascending: true });
 
     if (error) {
+        console.error("Supabase xətası:", error);
         list.textContent = "İştirakçıları yükləmək mümkün olmadı.";
         console.error(error);
         return;
     }
-
+console.log("Supabase cavabı:", data);
     list.replaceChildren();
 
     if (!data || data.length === 0) {
