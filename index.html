@@ -110,6 +110,7 @@
 <script>
 async function loadParticipants() {
     const list = document.getElementById("participants-list");
+if (!list) return;
     list.textContent = "İştirakçılar yüklənir...";
 
     const { data, error } = await supabaseClient
