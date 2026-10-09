@@ -114,7 +114,10 @@ if (!list) return;
     list.textContent = "İştirakçılar yüklənir...";
 
     const { data, error } = await supabaseClient
-        console.log("Supabase sorğusu başladı");
+        
+    console.log("Supabase sorğusu başladı");
+
+    const { data, error } = await supabaseClient
         .from("participants")
         .select("id, name")
         .order("id", { ascending: true });
