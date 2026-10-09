@@ -1,9 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>15RS - Səsvermə</title>
 
     <style>
@@ -82,8 +82,9 @@
             font-size: 15px;
         }
 
-        .vote-btn:hover {
-            background: #333;
+        .vote-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .footer {
@@ -95,90 +96,84 @@
     </style>
 </head>
 
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://xysfbigwhpnbhzudsdih.supabase.co/rest/v1/";
-  const SUPABASE_KEY = "sb_publishable_azLsIC6uEL2O6UGt6qmwzA_uhUPTp12";
-
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-</script>
-
-<script>
-async function loadParticipants() {
-    const list = document.getElementById("participants-list");
-if (!list) return;
-    list.textContent = "İştirakçılar yüklənir...";
-
-    const { data, error } = await supabaseClient
-        
-    console.log("Supabase sorğusu başladı");
-
-    const { data, error } = await supabaseClient
-        .from("participants")
-        .select("id, name")
-        .order("id", { ascending: true });
-
-    if (error) {
-        console.error("Supabase xətası:", error);
-        list.textContent = "İştirakçıları yükləmək mümkün olmadı.";
-        console.error(error);
-        return;
-    }
-console.log("Supabase cavabı:", data);
-    list.replaceChildren();
-
-    if (!data || data.length === 0) {
-        list.textContent = "Hələ iştirakçı əlavə edilməyib.";
-        return;
-    }
-
-    data.forEach(function(participant) {
-        const item = document.createElement("div");
-        item.className = "participant";
-
-        const name = document.createElement("span");
-        name.className = "participant-name";
-        name.textContent = participant.name;
-
-        const button = document.createElement("button");
-        button.className = "vote-btn";
-        button.textContent = "Səs ver";
-        button.disabled = true;
-        button.title = "Səsvermə növbəti mərhələdə aktivləşdiriləcək";
-
-        item.append(name, button);
-        list.appendChild(item);
-    });
-}
-
-loadParticipants();
-</script>
-    <body>
-
+<body>
     <div class="header">
         <h1>15RS</h1>
         <p>Səsvermə</p>
     </div>
 
     <div class="container">
-
         <div class="info">
             <h2>Bugünkü səsvermə</h2>
             <p>Səsvermə hər gün saat 21:00-da yenilənir.</p>
         </div>
 
-       
-<div id="participants-list">
-    <p>İştirakçılar yüklənir...</p>
-</div>
+        <div id="participants-list">
+            <p>İştirakçılar yüklənir...</p>
+        </div>
 
-    <div class="footer">
-        15RS © 2026
+        <div class="footer">15RS © 2026</div>
     </div>
 
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = "https://xysfbigwhpnbhzudsdih.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_azLsIC6uEL2O6UGt6qmwzA_uhUPTp12";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+        async function loadParticipants() {
+            const list = document.getElementById("participants-list");
+            list.textContent = "İştirakçılar yüklənir...";
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from("participants")
+                    .select("id, name")
+                    .order("id", { ascending: true });
+
+                if (error) {
+                    console.error("Supabase xətası:", error);
+                    list.textContent =
+                        "İştirakçılar yüklənmədi. Bağlantı və icazələri yoxlamaq lazımdır.";
+                    return;
+                }
+
+                list.replaceChildren();
+
+                if (!data || data.length === 0) {
+                    list.textContent = "Hələ iştirakçı əlavə edilməyib.";
+                    return;
+                }
+
+                data.forEach(function(participant) {
+                    const item = document.createElement("div");
+                    item.className = "participant";
+
+                    const name = document.createElement("span");
+                    name.className = "participant-name";
+                    name.textContent = participant.name;
+
+                    const button = document.createElement("button");
+                    button.className = "vote-btn";
+                    button.textContent = "Səs ver";
+                    button.disabled = true;
+                    button.title = "Səsvermə növbəti mərhələdə aktivləşdiriləcək";
+
+                    item.append(name, button);
+                    list.appendChild(item);
+                });
+            } catch (err) {
+                console.error("Bağlantı xətası:", err);
+                list.textContent =
+                    "Serverə qoşulmaq mümkün olmadı. İnternet bağlantısını yoxlayın.";
+            }
+        }
+
+        loadParticipants();
+    </script>
 </body>
 </html>
