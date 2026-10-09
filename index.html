@@ -131,9 +131,9 @@
 
             try {
                 const { data, error } = await supabaseClient
-                    .from("participants")
-                    .select("id, name")
-                    .order("id", { ascending: true });
+    .from("participants")
+    .select("id, name")
+    .order("id", { ascending: true });
 
                 if (error) {
                     console.error("Supabase xətası:", error);
